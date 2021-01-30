@@ -37,6 +37,8 @@ public class SlackBot extends Bot{
     @Controller(events = {EventType.MESSAGE, EventType.DIRECT_MESSAGE})
     public void onReceiveDM(WebSocketSession session, Event event){
         //need to check what will we get for event
+        System.out.println(event.getUserId());
+        reply(session, event, new Message(slackService.getCurrentUser().getName()));
     }
 
 
