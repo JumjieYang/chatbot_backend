@@ -1,6 +1,10 @@
+package org.JunjieYang.demo.bot;
+
 import org.JunjieYang.demo.model.Report;
 import org.JunjieYang.demo.dao.ReportRepository;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+
 import me.ramswaroop.jbot.core.slack.Bot;
 import me.ramswaroop.jbot.core.slack.Controller;
 import me.ramswaroop.jbot.core.slack.EventType;
@@ -34,11 +38,17 @@ public class SlackBot extends Bot{
         return this;
     }
 
-    @Controller(events = {EventType.MESSAGE, EventType.DIRECT_MESSAGE})
-    public void onReceiveDM(WebSocketSession session, Event event){
-        //need to check what will we get for event
-        System.out.println(event.getUserId());
-        reply(session, event, new Message(slackService.getCurrentUser().getName()));
+    @Controller(events = {EventType.DIRECT_MENTION, EventType.DIRECT_MESSAGE})
+    public void onReceiveDM(WebSocketSession session, Event event) {
+        reply(session, event, new Message("Hi, I am " + slackService.getCurrentUser().getName()));
+    }
+    @Controller(events = EventType.MESSAGE, pattern = "*")
+    public void onReceiveMessage(WebSocketSession session, Event event, Matcher matcher) {
+        if(!matcher.group(0).isEmpty()) {
+            Report report = new Report(event.getUserId(),matcher.group(0));
+            reportRepository.save(report);
+            reply(session, event, new Message("ABCDE."));
+        }
     }
 
 

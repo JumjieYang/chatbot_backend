@@ -1,15 +1,15 @@
 package org.JunjieYang.demo.model;
 
 import java.util.Date;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "report")
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Report {
     @Id
-    String id;
-
-    String user;
+    String worker;
 
     String report;
 
@@ -17,43 +17,35 @@ public class Report {
 
     Boolean morning;
 
-    public MorningReport(){}
+    public Report(){}
 
-    public MorningReport(String pUser, String pReport, Date pDate){
-        user = pUser;
+    public Report(String pUser, String pReport){
+        worker = pUser;
         report = pReport;
-        date = pDate;
     }
 
-    public void setId(String pId){
-        id = pId;
+    public void setWorker(String pUser){
+        worker = pUser;
     }
-    public String getId(){
-        return id;
-    }
-
-    public void setUser(String pUser){
-        user = pUser;
-    }
-    public String getUser(){
-        return user;
+    public String getWorker(){
+        return worker;
     }
 
     public void setReport(String pReport){
         report = pReport;
     }
-    public Stirng getReport(){
+    public String getReport(){
         return report;
     }
 
     public void setDate(Date pDate){
         date = pDate;
     }
-    public String getDate(){
+    public Date getDate(){
         return date;
     }
 
-    publiv void setMorning(Boolean pMorning ){
+    public void setMorning(Boolean pMorning ){
         morning = pMorning;
     }
     public Boolean getMorning(){
